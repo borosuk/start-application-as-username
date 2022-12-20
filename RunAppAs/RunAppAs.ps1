@@ -14,6 +14,13 @@ if (($settings.PASSWORD -eq "YourPassword") -or ($settings.USERNAME -eq "YourDom
   $settings | ConvertTo-Json | Out-File -FilePath $settingsFile
 }
 
+if ($settings.APP -eq "YourAppName"){
+  $settings.APP = Read-Host -Prompt 'Path to your app:'
+  
+  # Update the settings file
+  $settings | ConvertTo-Json | Out-File -FilePath $settingsFile
+}
+
 # Create the credential object
 $securePassword = ConvertTo-SecureString $settings.PASSWORD
 $credential = New-Object System.Management.Automation.PSCredential $settings.USERNAME, $securePassword
