@@ -14,19 +14,16 @@ if (($settings.PASSWORD -eq "YourPassword") -or ($settings.USERNAME -eq "YourDom
   $settings | ConvertTo-Json | Out-File -FilePath $settingsFile
 }
 
-if ($settings.APP -eq "YourAppName"){
-  $settings.APP = Read-Host -Prompt 'Path to your app:'
-  
-  # Update the settings file
-  $settings | ConvertTo-Json | Out-File -FilePath $settingsFile
-}
-
 # Create the credential object
 $securePassword = ConvertTo-SecureString $settings.PASSWORD
 $credential = New-Object System.Management.Automation.PSCredential $settings.USERNAME, $securePassword
 
+# Get the file path from the app's shortcut
+$WScript = New-Object -ComObject WScript.Shell
+$file_path = Get-ChildItem -Path ".\target.lnk" | ForEach-Object {$WScript.CreateShortcut($_.FullName).TargetPath}
+
 # Run the actual process using the given credentials
-Start-Process -FilePath $settings.APP -Credential $credential -WorkingDirectory $settings.WD
+Start-Process -FilePath $file_path -Credential $credential -WorkingDirectory $settings.WD
 
 # For debugging purposes.
 # Read-Host -Prompt "Press ENTER key to exit."
