@@ -8,7 +8,9 @@
 
 There are times when you need to run an application under another username, or even another domain/username, this should provide a more convenient way of doing it than using the CMD `runas` and typing your password each time.
 
-Edit the `sample.env` with your details and rename to `.env` before using. Currently available:
+Edit the `settings.json` before using (right-click running the script should trigger adding username/password too if they are the default ones).
+
+Currently available:
 - USERNAME - *your username including domain if needed*
 - PASSWORD - *your password*
 - APP - *your app, in my case is SSMS, so left that as example*
@@ -18,3 +20,4 @@ Edit the `sample.env` with your details and rename to `.env` before using. Curre
 
 **TODO:**
 - [ ] Create an alternative with using `Windows Credential Manager` instead of plain text.
+- [ ] Create the `settings.json` automatically if doesn't exist.
